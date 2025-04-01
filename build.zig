@@ -7,6 +7,13 @@ pub fn build(b: *std.Build) !void {
 
     const tracy_src = b.dependency("tracy_src", .{});
 
+    // Tracy binary utilities at directories:
+    // profiler
+    // update
+    // capture
+    // csvexport
+    // import
+
     // https://github.com/wolfpld/tracy/blob/2d9169e3d13f8d6048a8b9fadba40ab56d702527/cmake/server.cmake#L3-L9
     const tracy_common_sources = [_][]const u8{
         "tracy_lz4.cpp",
@@ -38,13 +45,17 @@ pub fn build(b: *std.Build) !void {
 
     const cppflags = [_][]const u8{
         "-fexperimental-library",
+        // "-DTRACY_ENABLE",
+        // "-fno-sanitize=undefined",
     };
 
     const capstone_dependency = b.dependency("capstone", .{
         .target = target,
         .optimize = optimize,
     });
-    // capture_mod.addIncludePath(capstone_dependency.path("capstone"));
+    // capstone dependency installs capstone headers at ./capstone (rewritten from ./include/capstone) and tracy imports capstone as "capstone.h" so we need the path directly to within the enclosing folder otherwise capstone.h cannot be found.
+    capture_mod.addIncludePath(capstone_dependency.artifact("capstone")
+        .getEmittedIncludeTree().path(b, "capstone"));
     capture_mod.linkLibrary(capstone_dependency.artifact("capstone"));
 
     const zstd_dependency = b.dependency("zstd", .{
