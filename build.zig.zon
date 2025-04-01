@@ -1,0 +1,36 @@
+.{
+    .name = .build_tracy,
+    .version = "0.0.0",
+
+    .minimum_zig_version = "0.14.0",
+
+    // XXX: If you fork zevem you should delete this field and re-run `zig build` to get a new suggested fingerprint value.
+    .fingerprint = 0x6582fee54cd48718,
+
+    .dependencies = .{
+        .tracy_src = .{
+            .url = "https://github.com/wolfpld/tracy/archive/refs/tags/v0.11.1.tar.gz",
+            .hash = "N-V-__8AAMeOlQEipHjcyu0TCftdAi9AQe7EXUDJOoVe0k-t",
+        },
+        .capstone = .{
+            .url = "git+https://github.com/allyourcodebase/capstone#7995ce6709350dea01410b6a7567a4f944b76a51",
+            .hash = "capstone-5.0.1-tmNUgT1GAAClSwiDASHOhkcLbEJrCMbZjD1pXxDe8NVZ",
+        },
+        // .capstone = .{
+        //     .url = "https://github.com/capstone-engine/capstone/archive/refs/tags/5.0.1.tar.gz",
+        //     .hash = "N-V-__8AAOy5SwM9sniZzxkWidTEo3SX4L-16eGFrIu5aHks",
+        // },
+        .zstd = .{
+            .url = "git+https://github.com/allyourcodebase/zstd.git?ref=1.5.7#01327d49cbc56dc24c20a167bb0055d7fc23de84",
+            .hash = "zstd-1.5.7-KEItkJ8vAAC5_rRlKmLflYQ-eKXbAIQBWZNmmJtS18q0",
+        },
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "LICENCE",
+        "README.org",
+    },
+}
